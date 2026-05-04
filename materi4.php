@@ -1,29 +1,30 @@
-<?php
-$hasil = "";
+<form method= "POST">
+    Username : <input type="text" name="username"><br><br>
+    Password : <input type="password" name="password"><br><br>
+    Nama : <input type="text" name="nama"><br><br>
+    Email : <input type="email" name="email"><br><br>
+    <button type="submit" name="kirim">Kirim</button>
 
-if (isset($_POST['login'])) {
-
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Username dan password benar
-    if ($username == "ajrin" && $password == "1105") {
-        $hasil = "Login Berhasil";
-    } else {
-        $hasil = "Username atau Password Salah";
-    }
-}
-?>
-
-<h3>Form Login</h3>
-
-<form method="post">
-    Username : <input type="text" name="username" required><br><br>
-    Password : <input type="password" name="password" required><br><br>
-    
-    <button type="submit" name="login">Login</button>
 </form>
 
 <?php
-echo "<h4>$hasil</h4>";
+include "koneksi.php";
+
+if (isset($_POST['kirim'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+    $nama = $_POST['nama'];
+    $email = $_POST['email'];
+
+    $sql = "INSERT INTO user (username, password, nama, email) VALUES ('$username', '$password', '$nama', '$email')";
+
+    if ($koneksi->query($sql) === TRUE) {
+        echo " Data Berhasil Ditambahkan";
+    } else {
+        echo "Error: " . $sql . "<br>" . $koneksi->error;
+    }
+}
+
+
+
 ?>
